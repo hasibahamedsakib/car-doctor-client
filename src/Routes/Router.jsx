@@ -1,10 +1,12 @@
 import { Outlet, createBrowserRouter } from "react-router-dom";
 import NavbarCompo from "../Components/Navbar/Navbar";
+import Bookings from "../Layout/Bookings/Bookings";
 import Checkout from "../Layout/Checkout/Checkout";
 import Home from "../Layout/Home/Home/Home";
 import Login from "../Layout/Login/Login";
 import Main from "../Layout/Main/Main";
 import Register from "../Layout/Register/Register";
+import PrivetRoute from "./Privetroute";
 
 const router = createBrowserRouter([
   {
@@ -18,9 +20,22 @@ const router = createBrowserRouter([
       },
       {
         path: "checkout/:id",
-        element: <Checkout />,
+        element: (
+          <PrivetRoute>
+            {" "}
+            <Checkout />{" "}
+          </PrivetRoute>
+        ),
         loader: ({ params }) =>
           fetch(`http://localhost:3001/services/${params.id}`),
+      },
+      {
+        path: "bookings",
+        element: (
+          <PrivetRoute>
+            <Bookings />,
+          </PrivetRoute>
+        ),
       },
     ],
   },

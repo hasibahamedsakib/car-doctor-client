@@ -38,17 +38,18 @@ const NavbarCompo = () => {
         >
           Home
         </NavLink>
-        <NavLink
-          className="text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-orange-600 py-2 pl-3 pr-4"
-          to="/about"
-        >
-          About
-        </NavLink>
+
         <NavLink
           className="text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-orange-600 py-2 pl-3 pr-4"
           to="/services"
         >
           Services
+        </NavLink>
+        <NavLink
+          className="text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-orange-600 py-2 pl-3 pr-4"
+          to="/bookings"
+        >
+          Bookings
         </NavLink>
         <NavLink
           className="text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-orange-600 py-2 pl-3 pr-4"
