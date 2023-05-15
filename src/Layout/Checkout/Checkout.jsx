@@ -4,7 +4,6 @@ import { useLoaderData } from "react-router-dom";
 import { AuthContext } from "../../Context/AuthProvider";
 const Checkout = () => {
   const { user } = useContext(AuthContext);
-  const { displayName, email } = user;
 
   const services = useLoaderData();
   const { title, price, img } = services;
@@ -29,7 +28,7 @@ const Checkout = () => {
     };
     console.log(services);
 
-    fetch(`http://localhost:3001/services`, {
+    fetch(`http://localhost:3001/bookings`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -63,7 +62,7 @@ const Checkout = () => {
             placeholder="Enter First Name"
             required={true}
             shadow={true}
-            defaultValue={displayName}
+            defaultValue={user?.displayName || "username"}
           />
         </div>
         <div>
@@ -74,7 +73,7 @@ const Checkout = () => {
             placeholder="Enter lastName"
             required={true}
             shadow={true}
-            defaultValue={displayName}
+            defaultValue={user?.displayName || "username"}
           />
         </div>
         <div>
@@ -95,7 +94,7 @@ const Checkout = () => {
             placeholder="Enter email"
             required={true}
             shadow={true}
-            defaultValue={email}
+            defaultValue={user?.email || "user email"}
           />
         </div>
       </div>
