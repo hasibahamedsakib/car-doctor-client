@@ -21,7 +21,7 @@ const Booking = ({ booking, handleDelete, handleConfirm }) => {
       </Table.Cell>
       <Table.Cell>
         <Button onClick={() => handleConfirm(_id)} pill={true}>
-          confirm
+          {booking?.status == "confirm" ? "Confirmed" : "confirm"}
         </Button>
       </Table.Cell>
     </Table.Row>

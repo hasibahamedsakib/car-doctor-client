@@ -31,19 +31,27 @@ const Bookings = () => {
     }
   };
   const handleConfirm = (id) => {
-    fetch(`http://localhost:3001/bookings/${id}`, {
-      method: "patch",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ status: "confirm" }),
-    })
-      .then((res) => res.json())
-      .then((result) => {
-        if (result.modifiedCount) {
-          alert("Successfully update a document.");
-        }
-      });
+    const ok = confirm("if you want to confirm this service?");
+    if (ok) {
+      fetch(`http://localhost:3001/bookings/${id}`, {
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ status: "confirm" }),
+      })
+        .then((res) => res.json())
+        .then((result) => {
+          if (result.modifiedCount > 0) {
+            alert("Successfully update a document.");
+            const remaining = bookings.filter((booking) => booking._id !== id);
+            const updated = bookings.find((booking) => booking._id === id);
+            updated.status = "confirm";
+            const newBookings = [updated, ...remaining];
+            setBookings(newBookings);
+          }
+        });
+    }
   };
 
   return (

@@ -26,7 +26,6 @@ const Checkout = () => {
       date,
       message,
     };
-    console.log(services);
 
     fetch(`http://localhost:3001/bookings`, {
       method: "POST",

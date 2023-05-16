@@ -1,11 +1,15 @@
 import { Button, Checkbox, Label, TextInput } from "flowbite-react";
 import { useContext } from "react";
 import { FaFacebookF, FaGoogle, FaLinkedinIn } from "react-icons/fa";
-import { Link } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { AuthContext } from "../../Context/AuthProvider";
 import loginImg from "../../assets/login/login.svg";
 const Login = () => {
   const { userLogin } = useContext(AuthContext);
+
+  const location = useLocation();
+  const navigate = useNavigate();
+  let from = location.state?.from?.pathname || "/";
   const handleLogin = (event) => {
     event.preventDefault();
     const email = event.target.email.value;
@@ -15,6 +19,7 @@ const Login = () => {
       .then((result) => {
         console.log(result.user);
         alert("Login Success");
+        navigate(from, { replace: true });
       })
       .catch((error) => {
         console.log(error.message);
