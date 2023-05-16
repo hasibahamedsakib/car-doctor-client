@@ -23,7 +23,14 @@ const NavbarCompo = () => {
               <p className="text-sm font-bold text-orange-500">
                 {user?.displayName}
               </p>
-              <Button color="gray" pill={true} onClick={() => userLogOut()}>
+              <Button
+                color="gray"
+                pill={true}
+                onClick={() => {
+                  localStorage.removeItem("user-jwt-token");
+                  userLogOut();
+                }}
+              >
                 logout
               </Button>
             </>

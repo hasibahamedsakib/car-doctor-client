@@ -17,9 +17,24 @@ const Login = () => {
 
     userLogin(email, password)
       .then((result) => {
-        console.log(result.user);
-        alert("Login Success");
-        navigate(from, { replace: true });
+        const user = result.user;
+        const userEmail = { email: user.email };
+
+        fetch(`http://localhost:3001/jwt`, {
+          method: "POST",
+          headers: {
+            "content-type": "application/json",
+          },
+          body: JSON.stringify(userEmail),
+        })
+          .then((res) => res.json())
+          .then((token) => {
+            // console.log(token);
+
+            localStorage.setItem("user-jwt-token", token.token);
+            alert("Login Success");
+            navigate(from, { replace: true });
+          });
       })
       .catch((error) => {
         console.log(error.message);
