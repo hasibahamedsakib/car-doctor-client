@@ -39,7 +39,7 @@ const AuthProvider = ({ children }) => {
       if (currentUser) {
         const userEmail = { email: currentUser.email };
 
-        fetch(`http://localhost:3001/jwt`, {
+        fetch(`https://car-doctor-server-green-five.vercel.app/jwt`, {
           method: "POST",
           headers: {
             "content-type": "application/json",

@@ -4,7 +4,7 @@ import SingleService from "./SingleService";
 const Services = () => {
   const [services, setServices] = useState([]);
   useEffect(() => {
-    fetch("http://localhost:3001/services/")
+    fetch("https://car-doctor-server-green-five.vercel.app/services/")
       .then((res) => res.json())
       .then((service) => setServices(service));
   }, []);

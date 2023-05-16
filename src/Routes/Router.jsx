@@ -27,7 +27,9 @@ const router = createBrowserRouter([
           </PrivetRoute>
         ),
         loader: ({ params }) =>
-          fetch(`http://localhost:3001/services/${params.id}`),
+          fetch(
+            `https://car-doctor-server-green-five.vercel.app/services/${params.id}`
+          ),
       },
       {
         path: "bookings",

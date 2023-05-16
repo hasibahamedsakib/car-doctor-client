@@ -5,8 +5,9 @@ import Booking from "./Booking";
 
 const Bookings = () => {
   const [bookings, setBookings] = useState([]);
+  const [loader, setLoader] = useState(true);
   const { user } = useContext(AuthContext);
-  const url = `http://localhost:3001/bookings?email=${user?.email}`;
+  const url = `https://car-doctor-server-green-five.vercel.app/bookings?email=${user?.email}`;
 
   useEffect(() => {
     fetch(url, {
@@ -15,13 +16,16 @@ const Bookings = () => {
       },
     })
       .then((res) => res.json())
-      .then((booking) => setBookings(booking));
+      .then((booking) => {
+        setBookings(booking);
+        setLoader(false);
+      });
   }, [url]);
 
   const handleDelete = (id) => {
     const ok = confirm("are you sure to want delete this item?");
     if (ok) {
-      fetch(`http://localhost:3001/bookings/${id}`, {
+      fetch(`https://car-doctor-server-green-five.vercel.app/bookings/${id}`, {
         method: "DELETE",
       })
         .then((res) => res.json())
@@ -37,7 +41,7 @@ const Bookings = () => {
   const handleConfirm = (id) => {
     const ok = confirm("if you want to confirm this service?");
     if (ok) {
-      fetch(`http://localhost:3001/bookings/${id}`, {
+      fetch(`https://car-doctor-server-green-five.vercel.app/bookings/${id}`, {
         method: "PATCH",
         headers: {
           "Content-Type": "application/json",
@@ -82,6 +86,7 @@ const Bookings = () => {
               booking={bk}
               handleDelete={handleDelete}
               key={bk._id}
+              loader={loader}
               handleConfirm={handleConfirm}
             />
           ))}

@@ -27,7 +27,7 @@ const Checkout = () => {
       message,
     };
 
-    fetch(`http://localhost:3001/bookings`, {
+    fetch(`https://car-doctor-server-green-five.vercel.app/bookings`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

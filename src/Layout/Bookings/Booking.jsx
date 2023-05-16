@@ -1,8 +1,14 @@
-import { Button, Table } from "flowbite-react";
+import { Button, Spinner, Table } from "flowbite-react";
 
-const Booking = ({ booking, handleDelete, handleConfirm }) => {
+const Booking = ({ booking, handleDelete, handleConfirm, loader }) => {
   const { _id, date, email, price, img, title } = booking;
-
+  if (loader) {
+    return (
+      <>
+        <Spinner aria-label="Large spinner example" size="lg" color="failure" />
+      </>
+    );
+  }
   return (
     <Table.Row className="bg-white dark:border-gray-700 dark:bg-gray-800">
       <Table.Cell className="whitespace-nowrap font-medium text-gray-900 dark:text-white">
