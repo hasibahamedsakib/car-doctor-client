@@ -27,7 +27,6 @@ const NavbarCompo = () => {
                 color="gray"
                 pill={true}
                 onClick={() => {
-                  localStorage.removeItem("user-jwt-token");
                   userLogOut();
                 }}
               >

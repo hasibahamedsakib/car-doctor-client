@@ -5,7 +5,7 @@ import { Link, useLocation, useNavigate } from "react-router-dom";
 import { AuthContext } from "../../Context/AuthProvider";
 import loginImg from "../../assets/login/login.svg";
 const Login = () => {
-  const { userLogin } = useContext(AuthContext);
+  const { userLogin, googleLogin } = useContext(AuthContext);
 
   const location = useLocation();
   const navigate = useNavigate();
@@ -18,28 +18,23 @@ const Login = () => {
     userLogin(email, password)
       .then((result) => {
         const user = result.user;
-        const userEmail = { email: user.email };
-
-        fetch(`http://localhost:3001/jwt`, {
-          method: "POST",
-          headers: {
-            "content-type": "application/json",
-          },
-          body: JSON.stringify(userEmail),
-        })
-          .then((res) => res.json())
-          .then((token) => {
-            // console.log(token);
-
-            localStorage.setItem("user-jwt-token", token.token);
-            alert("Login Success");
-            navigate(from, { replace: true });
-          });
+        console.log(user);
+        alert("Login Success");
+        navigate(from, { replace: true });
       })
       .catch((error) => {
         console.log(error.message);
       });
     console.log(email, password);
+  };
+  const handleGoogleLogin = () => {
+    googleLogin()
+      .then((result) => {
+        const user = result.user;
+        console.log(user);
+        navigate(from, { replace: true });
+      })
+      .catch((err) => console.log(err.message));
   };
   return (
     <div className="w-full flex justify-between container">
@@ -101,7 +96,10 @@ const Login = () => {
           <div className="text-center flex justify-center space-x-5">
             <FaFacebookF className=" h-12 w-12 border rounded-full p-3 text-orange-600 cursor-pointer hover:bg-slate-100" />
             <FaLinkedinIn className="h-12 w-12 border rounded-full p-3 text-orange-600 cursor-pointer hover:bg-slate-100" />
-            <FaGoogle className="    h-12 w-12 border rounded-full p-3 text-orange-600 cursor-pointer hover:bg-slate-100" />
+            <FaGoogle
+              onClick={handleGoogleLogin}
+              className="    h-12 w-12 border rounded-full p-3 text-orange-600 cursor-pointer hover:bg-slate-100"
+            />
           </div>
           <p className="text-center py-5  font-semibold">
             Do not Have any account?{" "}

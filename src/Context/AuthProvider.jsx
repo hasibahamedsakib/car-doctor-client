@@ -1,8 +1,10 @@
 import {
+  GoogleAuthProvider,
   createUserWithEmailAndPassword,
   getAuth,
   onAuthStateChanged,
   signInWithEmailAndPassword,
+  signInWithPopup,
   signOut,
 } from "firebase/auth";
 import { createContext, useEffect, useState } from "react";
@@ -13,7 +15,7 @@ const auth = getAuth(app);
 const AuthProvider = ({ children }) => {
   const [user, setUser] = useState({});
   const [loading, setLoading] = useState(true);
-
+  const googleProvider = new GoogleAuthProvider();
   const userSignUp = (email, password) => {
     setLoading(true);
     return createUserWithEmailAndPassword(auth, email, password);
@@ -27,10 +29,32 @@ const AuthProvider = ({ children }) => {
     return signOut(auth);
   };
 
+  const googleLogin = () => {
+    return signInWithPopup(auth, googleProvider);
+  };
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
       setUser(currentUser);
       setLoading(false);
+      if (currentUser) {
+        const userEmail = { email: currentUser.email };
+
+        fetch(`http://localhost:3001/jwt`, {
+          method: "POST",
+          headers: {
+            "content-type": "application/json",
+          },
+          body: JSON.stringify(userEmail),
+        })
+          .then((res) => res.json())
+          .then((token) => {
+            // console.log(token);
+
+            localStorage.setItem("user-jwt-token", token.token);
+          });
+      } else {
+        localStorage.removeItem("user-jwt-token");
+      }
     });
 
     return () => {
@@ -38,7 +62,14 @@ const AuthProvider = ({ children }) => {
     };
   });
 
-  const authInfo = { user, error: loading, userSignUp, userLogin, userLogOut };
+  const authInfo = {
+    user,
+    error: loading,
+    userSignUp,
+    userLogin,
+    userLogOut,
+    googleLogin,
+  };
 
   return (
     <AuthContext.Provider value={authInfo}>{children}</AuthContext.Provider>
